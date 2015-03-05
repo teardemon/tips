@@ -1,0 +1,30 @@
+书名<sed and awk 101 Hacks>
+sed ',' '+' '~'
+n,m从n到m
+n,+m从n到n+m
+n~m从n开始,跳m
+忽略大小写(i flag)
+执行命令(e flag)
+vim files.txt
+/etc/passwd
+/etc/group
+sed 's/^/ls -l /e' files.txt 
+-rw-r--r-- 1 root root 1926 10月 29 18:49 /etc/passwd
+-rw-r--r-- 1 root root 906 10月 28 17:28 /etc/group
+sed分隔符(delimiter)
+you can use any character as substitution delimiter. For example, | or ^ or @ or !.
+Power of & - Get Matched Pattern  &代表所匹配的字符串
+sed 's/^.*/<&>/' employee.txt 所有行用<>括起来
+sed 's/^[0-9][0-9][0-9]/[&]/g' employee.txt 
+分组替换 "\("  "\)"
+echo '1,2,3'|sed 's/\([^,]*\),\([^,]*\),\([^,]*\).*/\1,\3/g'
+######################################################################################################################
+awk
+不同的分隔符 awk 'BEGIN {FS="[,:%]"}'
+FS 域分隔符
+OFS 输出域分隔符
+RS 记录分隔符(也就是跟换行一样的概念)
+ORS 输出记录分隔符
+NR 记录计数
+FILENAME – Current File Name 
+FNR - File "Number of Record"

@@ -1,0 +1,42 @@
+metasplots
+
+ubuntu grub更改默认的内核
+vim /etc/default/grub
+GRUB_DEFAULT=2
+使用update-grub更新配置
+
+在Ubuntu终端彻底删除软件：
+
+1、删除软件
+方法一、如果你知道要删除软件的具体名称，可以使用               
+sudo apt-get remove --purge 软件名称  
+sudo apt-get autoremove --purge 软件名称 
+
+方法二、如果不知道要删除软件的具体名称，可以使用
+dpkg --get-selections | grep ‘软件相关名称’
+sudo apt-get purge 一个带core的package，如果没有带core的package，则是情况而定。
+2、清理残留数据
+dpkg -l |grep ^rc|awk '{print $2}' |sudo xargs dpkg -P 
+
+ubuntu apt-get 下载的软件包放在
+/var/cache/apt/archives
+如果要清除缓存文件夹，可以执行
+sudo apt-get clean
+
+进入单用户模式:
+选择recovery mode
+ 将linux ... ro recovery .. "ro之后替换为 rw single init=/bin/bash",crtl+x 启动
+ 
+ 可以从cdrom中安装软件包:
+ 插入光盘镜像,apt-cdrom add.
+
+更换了硬件，mac地址的更改可能会导致网路无法访问
+rm -f /etc/udev/rules.d/70-persistent-net.rules;reboot 
+
+无交互更改密码
+echo root:fsdfsdfds  |  chpasswd
+
+查看出口IP
+curl ipecho.net/plain
+
+

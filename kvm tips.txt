@@ -1,0 +1,42 @@
+#kvm create VM
+qemu-img create -f qcow2 /data/ubuntu-12.04.qcow2 10G
+virt-install --virt-type kvm --name test --ram 1024 \
+--cdrom=/data/ubuntu-12.04.2-server-amd64.iso \
+--disk path=/data/ubuntu-12.04.qcow2,size=10,format=qcow2 \
+--network network=default \
+--graphics vnc,listen=0.0.0.0 --noautoconsole \
+--os-type=linux --os-variant=ubuntuprecise
+#get VNC port
+virsh vncdisplay test
+
+#eject cd 
+#To eject a disk using virsh, libvirt requires that you attach an empty disk at the same #target that the CDROM was previously attached, which should be hdc. You can confirm the #appropriate target using the dom dumpxml vm-image command.
+virsh start test --paused
+virsh attach-disk --type cdrom --mode readonly  test  "" hdc
+virsh resume test
+##################################################################################################
+#kvm use 'virsh console'
+vim /etc/default/grub
+GRUB_CMDLINE_LINUX_DEFAULT="console=ttyS0"
+updete-grub
+reboot
+
+#add "/etc/init/ttyS0.conf"
+
+# ttyS0.conf - getty
+# This service maintains a getty on ttyS0 from the point the system is
+# started until it is shut down again.
+
+start on stopped rc RUNLEVEL=[2345]
+stop on runlevel [!2345]
+respawn
+exec /sbin/getty -L 115200 ttyS0 vt220
+
+now can use virsh console
+#http://blog.csdn.net/ubuntu64fan/article/details/8137236
+#####################################################################################################
+
+#copy vm  test config file  test.xml  to template.xml, cp test.img template.img ,change the corresponding parameters
+#virsh define template
+#now got a new vm
+

@@ -1,0 +1,3 @@
+neutron port-list -c id -c fixed_ips -c device_owner -c status|grep DOWN
+查找down的port，与VM/service无关联的话，就可以删掉回收。
+在创建VM是，port有一小段时间是无device_owner的，必需小心删除的时间   

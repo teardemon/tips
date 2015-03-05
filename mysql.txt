@@ -1,0 +1,26 @@
+mysqlcheck 表维护工具It checks, repairs, optimizes, or analyzes tables.
+mysqldump:
+mysqldump db_name > backup-file.sql
+mysql db_name < backup-file.sql
+mysql -e "source /path-to-backup/backup-file.sql" db_name
+mysqldump移动数据库:
+mysqldump --opt db_name | mysql --host=remote_host -C db_name
+ 
+显示表信息
+"DESCRIBE pet;" or "desc pet;"
+显示创建表语句:show create table pet;
+列的最大值:select max(birth) as young from pet;
+更改root密码:mysqladmin -u root -p password "newpassword"
+向MySQL增加新用户账户:
+GRANT ALL PRIVILEGES ON *.* TO 'monty'@'localhost' IDENTIFIED BY 'some_pass' WITH GRANT OPTION;
+ 
+INSERT INTO user VALUES('localhost','monty',PASSWORD('some_pass'),
+                          'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y');
+
+FLUSH PRIVILEGES;
+使用 GRANT，则不需要使用FLUSH PRIVILEGES。
+ 
+从MySQL删除用户账户:DROP USER
+设置账户密码:
+SET PASSWORD FOR 'jeffrey'@'%' = PASSWORD('biscuit');
+MyISAM表(对应.MYI和.MYD文件的表)

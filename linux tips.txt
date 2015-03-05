@@ -1,0 +1,15 @@
+#############################################
+Linux系统swappiness参数在内存与交换分区间优化
+swappiness的值的大小对如何使用swap分区是有着很大的联系的。swappiness=0的时候表示最大限度使用物理内存，然后才是swap空间，swappiness＝100的时候表示积极的使用swap分区，并且把内存上的数据及时的搬运到swap空间里面。linux的基本默认设置为60
+sysctl vm.swappiness=0
+##############################################
+Linux初始化
+Securing a Linux Server http://spenserj.com/blog/2013/07/15/securing-a-linux-server/
+##############################################
+ubuntu内核3.13 关闭CPU节能
+可以用cpupower来设置
+for f in `ls /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor`
+do
+echo "performance" > $f
+done
+##############################################

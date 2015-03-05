@@ -1,0 +1,50 @@
+#kvm create VM
+qemu-img create -f qcow2 /data/ubuntu-12.04.qcow2 10G
+virt-install --virt-type kvm --name test --ram 1024 \
+--cdrom=/data/ubuntu-12.04.2-server-amd64.iso \
+--disk path=/data/ubuntu-12.04.qcow2,size=10,format=qcow2 \
+--network network=default \
+--graphics vnc,listen=0.0.0.0 --noautoconsole \
+--os-type=linux --os-variant=ubuntuprecise
+#get VNC port
+virsh vncdisplay test
+
+#eject cd 
+#To eject a disk using virsh, libvirt requires that you attach an empty disk at the same #target that the CDROM was previously attached, which should be hdc. You can confirm the #appropriate target using the dom dumpxml vm-image command.
+virsh start test --paused
+virsh attach-disk --type cdrom --mode readonly  test  "" hdc
+virsh resume test
+
+#add nic
+http://www.it165.net/os/html/201304/4896.html
+virsh attach-interface test --type bridge --source br1
+
+#init
+apt-get install cloud-init
+#dpkg-reconfigure cloud-init
+#clean up（remove mac address details.like:/etc/udev/rules.d/70-persistent-net.rules）
+
+#ubuntu 
+vim /etc/default/grub
+GRUB_CMDLINE_LINUX_DEFAULT="console=ttyS0"
+/sbin/shutdown -h now
+
+#Undefine the libvirt domain
+virsh undefine trusty
+
+
+导入镜像：
+ glance image-create --name='cirros image' --is-public=true \
+--container-format=bare --disk-format=qcow2 < cirros-0.3.1-x86_64-disk.img
+
+glance member-create <image-uuid> <project-uuid>
+
+
+创建flavor：
+                                                  NAME     ID  MEM  DISK VCPUs
+nova flavor-create --is-public False --swap 4096 test_yao auto 4096  50   8
+nova flavor-access-add $FLACOR_IP $TENANTID
+
+配置创建虚机（virsh define /etc/libvirt/qemu/test.xml ），接着启动虚机（ virsh start test ）
+
+

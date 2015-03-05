@@ -1,0 +1,13 @@
+¿ªÆôssh-agent
+eval `ssh-agent`
+ssh-add ~/.ssh/key1 ~/.ssh/key2 ...
+ssh <host1>
+ssh <host2>
+ÅäÖÃÎÄ¼ş vim .ssh/config
+Host 183.56.146.21
+Port 32200
+ProxyCommand ssh 58.215.46.21 nc %h %p
+
+Host 58.215.46.21
+Port 32200
+

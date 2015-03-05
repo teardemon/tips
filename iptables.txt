@@ -1,0 +1,52 @@
+#iptables -N block
+#iptables -A block -m state --state ESTABLISHED,RELATED -j ACCEPT
+#iptables -A block -m state --state NEW -i ! ppp0 -j ACCEPT
+#iptables -A block -j DROP
+#iptables -A INPUT -j block
+#iptables -A FORWARD -j block
+
+1.Create a new chain (-N).
+2.Delete an empty chain (-X).
+3.Change the policy for a built-in chain. (-P).
+4.List the rules in a chain (-L).
+5.Flush the rules out of a chain (-F).
+6.Zero the packet and byte counters on all rules in a chain (-Z).
+
+There are several ways to manipulate rules inside a chain:
+1.Append a new rule to a chain (-A).
+2.Insert a new rule at some position in a chain (-I).
+3.Replace a rule at some position in a chain (-R).
+4.Delete a rule at some position in a chain, or the first that matches (-D).
+
+eth+ 匹配所有的eth接口
+
+# iptables -A FORWARD -m limit -j LOG
+Syn-flood protection:
+# iptables -A FORWARD -p tcp --syn -m limit --limit 1/s -j ACCEPT
+Furtive port scanner:
+# iptables -A FORWARD -p tcp --tcp-flags SYN,ACK,FIN,RST RST -m limit --limit 1/s -j ACCEPT
+Ping of death:
+# iptables -A FORWARD -p icmp --icmp-type echo-request -m limit --limit 1/s -j ACCEPT
+
+the state match : (-m state --state *states) *states: NEW  ESTABLISHED RELATED INVALID
+
+target:
+LOG  --log-level   --log-prefix
+
+on a producation firewall,always combine 'log' with the 'limit' match, to prevent someone from flooding logs. 
+
+log level:`debug', `info', `notice', `warning', `err', `crit', `alert' , `emerg'.
+
+iptables -F (chain_name)清空所有规则
+iptables -X (chain_name) 删除所有自定义的chain（链）
+iptables -Z (chain_name)重置计数
+
+setting policy: iptables -P INPUT　DROP
+# iptables -N no-conns-from-ppp0
+# iptables -A no-conns-from-ppp0 -m state --state ESTABLISHED,RELATED -j ACCEPT
+# iptables -A no-conns-from-ppp0 -m state --state NEW -i ! ppp0 -j ACCEPT
+# iptables -A no-conns-from-ppp0 -i ppp0 -m limit -j LOG --log-prefix "Bad packet from ppp0:"
+# iptables -A no-conns-from-ppp0 -i ! ppp0 -m limit -j LOG --log-prefix "Bad packet not from ppp0:"
+# iptables -A no-conns-from-ppp0 -j DROP
+# iptables -A INPUT -j no-conns-from-ppp0
+# iptables -A FORWARD -j no-conns-from-ppp0

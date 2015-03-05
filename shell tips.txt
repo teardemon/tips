@@ -1,0 +1,87 @@
+echo $((2#101011)) 进制转换，输出十进制(2,8,16)
+
+REPLY是'read'命令结果保存的默认变量.
+
+$SECONDS 这个脚本已经运行的时间(单位为秒). 
+
+$_ 保存之前执行的命令的最后一个参数. 
+
+$$ 脚本自身的进程ID
+
+$$ 脚本自身的进程ID
+
+字符串长度：
+${#string} 
+expr length $string 
+expr "$string" : '.*' 
+
+(cd /source/directory && tar cf - . ) | (cd /dest/directory && tar xpvf -)
+
+expr "$a" : '.*' 字符串a的长度  ':'等于match
+
+在DOS文件格式中使用CR/LF换行，在Unix下仅使用LF换行，sed替换命令如下：
+   DOS转UNIX：$ sed ‘s/.$//’dosfile.txt > unixfile.txt
+   UNIX转DOS：$ sed ’s/$/\r/’unixfile.txt > dosfile.txt
+   
+column 列格式化工具. 这个过滤工具将会将列类型的文本转化为"易于打印"的表格式进行输出, 
+通过在合适的位置插入tab.    
+(printf "PERMISSIONS LINKS OWNER GROUP SIZE MONTH DAY HH:MM PROG-NAME\n"; ls -l | sed 1d) | column -t 
+
+iconv 一个可以将文件转化为不同编码格式(字符集)的工具
+获取IP
+/sbin/ifconfig|grep "inet addr:"|grep -v 127.0.0.1|awk -F [' ':]+ '{print $4}'
+
+################################################
+使用dd创建大的文件块:
+dd if=/dev/zero of=XenGuest1.sawp bs=1024k count=1024k
+dd if=/dev/zero of=XenGuest1.sawp bs=1024k seek=1024 count=0
+使用seek可以跳过从/dev/zero复制的块,可以减少创建时间.
+################################################
+
+tcpdump用法：
+关键字类型：
+关于类型的关键字：host net Port
+确认传输的方向：src , dst 
+协议的关键字：arp,tcp,udp
+其他重要的关键字如下：gateway,broadcast,less,greater,还有三种逻辑运算，取非运算是 'not ' '! ',与运算是'and','&&';或运算 是'or','││'；
+示例：
+tcpdump host 192.168.138.101
+tcpdump tcp port 23 and host 210.27.48.1
+
+设置一个擦除字符：stty erase '#'，当时用read时，就可以使用#来擦除字符了，使用stty erase'^?'恢复
+stty -echo 关闭显示 stty echo 恢复
+
+如果给予一个普通用户sudo,root 下 vim的权限,在vim中就可以使用:!COMMAND 来执行所有命令.
+使用NOEXEC来禁止:%admin ALL=(root)NOEXEC:/usr/bin/vim
+
+在shell中比较浮点数可以用bc或awk:
+[ `echo 10.23 <  15"|bc` -eq 1 ]
+####################################################
+使用 screen 管理你的远程会话
+http://www.ibm.com/developerworks/cn/linux/l-cn-screen/
+screen "cmd" (crtl a d )
+####################################################
+字符串分片:
+${varname:start:size}
+####################################################
+ps aux|grep snmpd 会匹配到"匹配语句"
+ps aux|grep [s]nmpd 则不会匹配到"匹配语句"
+####################################################
+产生随机数openssl rand -hex 10
+####################################################
+查看实时网速：
+sar -n DEV 1 100 
+####################################################
+grep -C 5 "tt"  test查看匹配的上下五行
+####################################################
+磁盘容量
+du -sh : 查看当前目录总共占的容量。而不单独列出各子项占用的容量 
+du -lh --max-depth=1 : 查看当前目录下一级子文件和子目录占用的磁盘容量。
+####################################################
+生成密码
+openssl rand -hex 10
+####################################################
+使用dd添加swap分区
+dd if=/dev/zero of=/data2/swap.add8 bs=1M count=8192&& mkswap /data2/swap.add8 && swapon /data2/swap.add8
+注意：dd时不要使用seek，不然会提示“swapon: /data/swap.add8: skipping - it appears to have holes.”
+####################################################

@@ -1,0 +1,42 @@
+Ubuntu 12.04 
+使用ntp同步时间
+使用apt-get安装puppet
+client申请证书:
+puppet agent --no-daemonize --onetime --verbose --debug
+签发证书:
+puppet cert --list
+puppet cert --sign node.domain.com
+
+
+主机已在puppet master注册过，执行过程
+puppet cert clean ip-113-107-161-152.yygamedev.com
+rm -f /etc/puppet/ssl/certs/ip-113-107-161-152.yygamedev.com.pem
+puppet agent -t
+
+创建test模块：
+1>.mkdir -p modules/test/{manifests,templates,files}
+vim /etc/puppet/modules/test/manifests/init.pp
+  class test {
+        file { "/tmp/$hostname.txt": content => "Hello World"; }
+  } 
+2> 在模块中引入“$hostname”,需要将变量传给ERB模块文件。
+vim /etc/puppet/modules/test/templates/test.erb
+hostname <%= fqdn%>
+3.创建测试节点compute1
+vim /etc/puppet/manifests/nodes/compute1
+node "compute1" {
+        include test
+}
+vim /etc/puppet/manifests/site.pp 
+import "nodes/compute1"
+#import "nodes/*.pp"
+
+检测配置文件
+1> puppet master检查
+puppet parser validate /etc/puppet/modules/test/manifests/init.pp
+2> puppet agent check
+puppet agent --test --noop 
+#使用--noop验证不执行
+
+
+

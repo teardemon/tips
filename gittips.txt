@@ -1,0 +1,85 @@
+$ git config --global user.name "Your Name"
+$ git config --global user.email "email@example.com"
+
+创建库：
+mkdir test
+cd test/
+git init
+
+把文件添加到库：
+touch readme.txt 
+git add readme.txt
+git commit -m "add readme file"
+
+git status 查看状态
+未commit时可以查看diff：git diff readme.txt
+
+版本回退：
+查看log：git log
+简化输出：git log --pretty=oneline
+
+yao@ubuntu-101:/work$ git log --pretty=oneline 
+fe258d410a8644649079ea5af3b2a3a27cdb8621 a simple shell script
+1c0bab16e775389d7edef4fb2af581b595f88dca add test.txt
+b7642b837ec7a258b0b77d2bea4def2affa795e8 add a newline
+
+回到之前的版本(回到上一个版本HEAD^,上上一个HEAD^^,前100个HEAD~100)：
+git reset --hard HEAD^
+
+回到一个版本：
+git reset --hard  (ID number)
+
+git reflog :记录对于库的每一次命令（可以用来获取版本id）
+
+管理修改:
+修改了文件，add之后，在修改，commit，只会commit第一次修改的，第二次修改没add。
+提交后，用“git diff HEAD -- readme.txt”命令可以查看工作区和版本库里面最新版本的区别
+撤销修改：
+修改了文件，没有add和commit：git checkout -- file 回复修改前状态
+add之后，git reset HEAD file可以把暂存区的修改撤销掉（unstage），重新放回工作区，再使
+git checkout -- file就可以回复修改前状态
+
+跳过使用暂存区域(即git add)
+git commit -a -m "add whiout git add"
+
+删除文件：
+rm readme.txt :在目录下删除文件
+git checkout -- readme.txt :回复文件
+git rm file :在库中删除文件
+
+
+申请github账号：
+在本地的work库中运行：
+git remote add origin git@github.com:qiangyao/work.git
+把本地库的文件推送至github：
+git push -u origin master
+以后推送：git push origin master
+从远程clone：
+ git clone git@github.com:qiangyao/gitskill.git
+查看远程仓库的信息:
+git remote show origin
+
+标签:
+####################################
+git tag -a v1.4 -m 'my version 1.4'
+git show v1.4
+####################################
+git tag v1.4-lw
+git show v1.4-lw
+####################################
+后期加标签:
+git tag -a v1.2 9fceb02(ID)
+####################################
+分享标签:
+git push origin v1.5 
+一起推送所有标签:
+git push origin --tags
+####################################
+git branch iss53:创建分支
+git checkout iss53:切换到分支
+与上两行相同作用:
+git checkout -b iss53
+git branch -d iss53 :delete branch 
+#####################################
+ 
+ 
