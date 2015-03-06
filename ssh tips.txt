@@ -11,3 +11,6 @@ ProxyCommand ssh 58.215.46.21 nc %h %p
 Host 58.215.46.21
 Port 32200
 
+#copy files 
+at door machine: scp -3 host1:file1 host2:file2
+
