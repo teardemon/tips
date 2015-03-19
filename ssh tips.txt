@@ -1,9 +1,9 @@
-¿¿ssh-agent
+#start ssh-agent
 eval `ssh-agent`
 ssh-add ~/.ssh/key1 ~/.ssh/key2 ...
 ssh <host1>
 ssh <host2>
-¿¿¿¿ vim .ssh/config
+# edit .ssh/config
 Host x.x.x.x
 Port 32200
 ProxyCommand ssh $bridge_host nc %h %p
