@@ -1,14 +1,14 @@
-¿ªÆôssh-agent
+¿¿ssh-agent
 eval `ssh-agent`
 ssh-add ~/.ssh/key1 ~/.ssh/key2 ...
 ssh <host1>
 ssh <host2>
-ÅäÖÃÎÄ¼þ vim .ssh/config
-Host 183.56.146.21
+¿¿¿¿ vim .ssh/config
+Host x.x.x.x
 Port 32200
-ProxyCommand ssh 58.215.46.21 nc %h %p
+ProxyCommand ssh $bridge_host nc %h %p
 
-Host 58.215.46.21
+Host $bridge_host
 Port 32200
 
 #copy files 
