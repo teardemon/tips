@@ -48,3 +48,7 @@ nova flavor-access-add $FLACOR_IP $TENANTID
 配置创建虚机（virsh define /etc/libvirt/qemu/test.xml ），接着启动虚机（ virsh start test ）
 
 
+同时启动多个VM：
+nova boot  --flavor  $flavor  --image  $image --key-name $key --num-instances 2  $instance-name 
+指定启动的hypervisor：
+nova boot --poll --flavor ${FLAVOR} --image ${IMAGE} --nic net-id=${NET_ID} --key-name $key $instance-name --availability-zone nova:hypervisor
