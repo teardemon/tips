@@ -1,3 +1,10 @@
+#recycle zombie IP
 neutron port-list -c id -c fixed_ips -c device_owner -c status|grep DOWN
-查找down的port，与VM/service无关联的话，就可以删掉回收。
-在创建VM是，port有一小段时间是无device_owner的，必需小心删除的时间   
+find port with down state,if it unrelated with VM/service,then you can recycle by delete
+when create vm,port without device_owner for a short time,so caution ops time
+
+#cold migrate
+Juno support  specified host,before juno not support 
+scp -rp c7f24ad4-9d33-4b43-941a-8fb9976c66e8 root@A_node:/var/lib/nova/instance 
+nova reset-state --active $instance 
+In our env,it's experience(but need test)
