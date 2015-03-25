@@ -1,0 +1,11 @@
+#stress
+
+#iperf
+server端：iperf -s -p 5001
+client端：iperf -c server -p 5001 -t 60
+-r 双向测试
+iperf -c server -p 5001 -r -t 60
+
+#web 
+Siege,ab
+
