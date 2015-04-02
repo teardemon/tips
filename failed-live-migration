@@ -1,0 +1,71 @@
+How to diagnose a failed live migration:
+if you run nova show <vm uuid> and status show MIGRATING for a long time.
+you ssh to the source hv and see this
+$ sudo netstat -putan |grep libvirt
+tcp        0      0 0.0.0.0:16509           0.0.0.0:*               LISTEN      3312/libvirtd
+
+(no established connections by libvirt)
+you see the instance files on the destination hv but no on the source hv
+nova show <vm uuid> shows ERROR state.
+you migrated a vm from legacy to cloudgw AZ (or the opposite)
+How to fix it:
+(safe and slow method)
+
+1 - if the vm is running, shut it down.
+if you can ssh to the vm, shut it down form inside. if nova still thinks that the vm is active
+$ nova stop <vm uuid>
+2 - take backup of the instance directory.
+
+$ cd /var/lib/nova/instance
+$ sudo cp -r <vm uuid> <vm uuid>.bkp
+3 - take all the information about the vm, save it somewhere
+
+$ nova show <vm uuid>
+$ neutron port-list --device-id <vm uuid>
+$ neutron port-show <vm port-id>
+4 - inform internal chat you are going to recreate a port, ask them not to build a new vm for some minutes
+most likely neutron won’t reuse the same ip as soon as you deleted the ports, but is a safety measure.
+5 - change your tenant name to the vm’s original tenant
+
+$ export OS_TENANT_NAME=<vm tenant's name>
+6 - delete the instance
+
+$ nova delete <vm uuid>
+7 - create the ports
+
+$ neutron port-create --security-group <security group name> --fixed-ip subnet_id=<port subnet id>,ip_address=<port ip address> <network uuid>
+
+if the port is the public (eth0) port on a legacy vm you have to add the unicom ip
+
+$ neutron port-update <port uuid> --allowed_address_pairs list=true type=dict ip_address=<unicom ip>
+8 - create the vm
+
+legacy az example:
+$ nova boot --poll --image <vm image uuid> --meta --meta 'ip={"type":"game typical","value":["telecom ip","unicom ip","private ip"]}' --flavor <vm flavor uuid> \
+--availability_zone legacy --nic port-id=<npublic network (eth0) new vnic uuid> --nic port-id=<private network (eth1) new vnic uuid> <vm name>
+
+cloudgw az example:
+$ nova boot --poll --image <vm image uuid> --meta 'ip={"type":"cloudgw","value":["ip"],"gw":"gw ip","lvs_cluster_id":"1"} \
+--meta 'remark={"wu\u516c\u7f51\u6d4b\u8bd5"}' --flavor <vm flavor uuid> \
+--availability_zone cloudgw --nic port-id=<new port id> <vm name>
+meta setting can be challenging to escape from shell, copy and paste then replace.
+
+9 - when the vm finish to boot, stop it
+
+$ nova stop <new vm uuid>
+10 - on the source hypervisor copy the disk over the new vm disk
+
+$ sudo -i su - nova -s /bin/bash
+$ cd /var/lib/nova/instance/<vm uuid>
+$ rsync -rav disk <new vm's hypervisor>:/var/lib/nova/instances/<new vm uuid>/
+11 - start the vm again
+
+$ nova start <new vm uuid>
+
+Risky fast method:
+using
+
+nova reset-state --active <vm uuid>
+nova stop <vm uuid>
+nova migrate <vm uuid>
+sometimes the vm can be restored to a working state, but not always. if you take a backup of vm’s disk first is ok to try.
