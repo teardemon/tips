@@ -57,31 +57,31 @@ stty -echo 关闭显示 stty echo 恢复
 在shell中比较浮点数可以用bc或awk:
 [ `echo 10.23 <  15"|bc` -eq 1 ]
 ####################################################
-使用 screen 管理你的远程会话
+screen usage:
 http://www.ibm.com/developerworks/cn/linux/l-cn-screen/
 screen "cmd" (crtl a d )
 ####################################################
-字符串分片:
+string split:
 ${varname:start:size}
 ####################################################
-ps aux|grep snmpd 会匹配到"匹配语句"
-ps aux|grep [s]nmpd 则不会匹配到"匹配语句"
+ps aux|grep snmpd  : lines containing a match to the given PATTERN
+ps aux|grep [s]nmpd :
 ####################################################
-产生随机数openssl rand -hex 10
-####################################################
-查看实时网速：
+Report network statistics
 sar -n DEV 1 100 
 ####################################################
-grep -C 5 "tt"  test查看匹配的上下五行
+grep -C 5 "tt"  test :Print  NUM lines of output context
 ####################################################
-磁盘容量
-du -sh : 查看当前目录总共占的容量。而不单独列出各子项占用的容量 
-du -lh --max-depth=1 : 查看当前目录下一级子文件和子目录占用的磁盘容量。
+estimate file space usage
+du -sh : total size of current directory
+du -lh --max-depth=1 :  size of  directory,depth equal 1
 ####################################################
-生成密码
+generate password:
 openssl rand -hex 10
 ####################################################
-使用dd添加swap分区
+add swap file
 dd if=/dev/zero of=/data2/swap.add8 bs=1M count=8192&& mkswap /data2/swap.add8 && swapon /data2/swap.add8
-注意：dd时不要使用seek，不然会提示“swapon: /data/swap.add8: skipping - it appears to have holes.”
+if using seek=8192 will lead to error:'swapon: /data/swap.add8: skipping - it appears to have holes.'
 ####################################################
+make a MAC address:
+printf 'DE:AD:BE:EF:%02X:%02X\n' $((RANDOM%256)) $((RANDOM%256))
