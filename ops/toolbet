@@ -1,0 +1,7 @@
+top, vmstat, iostat, systat, sar, mpstat
+
+tcpdump, ngrep
+
+
+#update time 
+/usr/sbin/ntpdate  asia.pool.ntp.org 
