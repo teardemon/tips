@@ -1,9 +1,4 @@
-#############################################
-LinuxÏµÍ³swappiness²ÎÊıÔÚÄÚ´æÓë½»»»·ÖÇø¼äÓÅ»¯
-swappinessµÄÖµµÄ´óĞ¡¶ÔÈçºÎÊ¹ÓÃswap·ÖÇøÊÇÓĞ×ÅºÜ´óµÄÁªÏµµÄ¡£swappiness=0µÄÊ±ºò±íÊ¾×î´óÏŞ¶ÈÊ¹ÓÃÎïÀíÄÚ´æ£¬È»ºó²ÅÊÇswap¿Õ¼ä£¬swappiness£½100µÄÊ±ºò±íÊ¾»ı¼«µÄÊ¹ÓÃswap·ÖÇø£¬²¢ÇÒ°ÑÄÚ´æÉÏµÄÊı¾İ¼°Ê±µÄ°áÔËµ½swap¿Õ¼äÀïÃæ¡£linuxµÄ»ù±¾Ä¬ÈÏÉèÖÃÎª60
-sysctl vm.swappiness=0
 ##############################################
-Linux³õÊ¼»¯
 Securing a Linux Server http://spenserj.com/blog/2013/07/15/securing-a-linux-server/
 ##############################################
 ubuntu  linux kernel 3.13 disable cpupower
@@ -19,3 +14,9 @@ tcpdump -v -i eth0 -s 1500 -XX -c 1 'ether proto 0x88cc'|egrep "Management Addre
 stress test
 high load vm: stress --cpu 10 --io 4 --vm 120 -d 1
 medium load vm: stress --cpu 2 --io 1 --vm 10 -d 1
+##############################################
+ç¡¬ä»¶ä¿¡æ¯ï¼š
+æŸ¥çœ‹ä¸»æ¿å‹å·ï¼š
+dmidecode |grep -A16 "System Information$"
+å†…å­˜æ§½åŠå†…å­˜æ¡ï¼š
+dmidecode |grep -A16 "Memory Device$"
