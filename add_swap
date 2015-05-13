@@ -1,0 +1,12 @@
+1.decrease swapiness
+sudo sysctl -w vm.swappiness=0
+2.check if a swap file is in use
+cat /proc/swaps
+3.create a swap file
+dd if=/dev/zero of=/data/swapXX bs=1M count=8096
+4.format swap file
+mkswap /data/swapXX
+5.active swap file 
+swapon /data/swapXX
+6.auto mount
+echo /data/swapXX swap swap defaults 0 0 | sudo tee -a /etc/fsta
