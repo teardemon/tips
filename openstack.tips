@@ -9,3 +9,15 @@ scp -rp c7f24ad4-9d33-4b43-941a-8fb9976c66e8 root@A_node:/var/lib/nova/instance
 nova reset-state --active $instance 
 In our env,it's experience(but need test)
 after cold migrate,need to resize-confirm instance
+
+
+#keystone api
+
+curl -s -X POST $Identity_url/v2.0/tokens \
+            -H "Content-Type: application/json" \
+            -d '{"auth": {"tenantName": "'"$OS_TENANT_NAME"'", "passwordCredentials":
+            {"username": "'"$OS_USERNAME"'", "password": "'"$OS_PASSWORD"'"}}}' \
+            | python -m json.tool
+
+#nova show  'updated'
+actually is not the last time you did nova <something>, but the last time nova report the vm, which is done after you do nova <something>  'instance changed' 
