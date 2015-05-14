@@ -1,42 +1,38 @@
-metasplots
-
-ubuntu grub¸ü¸ÄÄ¬ÈÏµÄÄÚºË
+ubuntu grubæ›´æ”¹é»˜è®¤çš„å†…æ ¸
 vim /etc/default/grub
 GRUB_DEFAULT=2
-Ê¹ÓÃupdate-grub¸üĞÂÅäÖÃ
+ä½¿ç”¨update-grubæ›´æ–°é…ç½®
 
-ÔÚUbuntuÖÕ¶Ë³¹µ×É¾³ıÈí¼ş£º
+åœ¨Ubuntuç»ˆç«¯å½»åº•åˆ é™¤è½¯ä»¶ï¼š
 
-1¡¢É¾³ıÈí¼ş
-·½·¨Ò»¡¢Èç¹ûÄãÖªµÀÒªÉ¾³ıÈí¼şµÄ¾ßÌåÃû³Æ£¬¿ÉÒÔÊ¹ÓÃ               
-sudo apt-get remove --purge Èí¼şÃû³Æ  
-sudo apt-get autoremove --purge Èí¼şÃû³Æ 
+1ã€åˆ é™¤è½¯ä»¶
+æ–¹æ³•ä¸€ã€å¦‚æœä½ çŸ¥é“è¦åˆ é™¤è½¯ä»¶çš„å…·ä½“åç§°ï¼Œå¯ä»¥ä½¿ç”¨               
+sudo apt-get remove --purge è½¯ä»¶åç§°  
+sudo apt-get autoremove --purge è½¯ä»¶åç§° 
 
-·½·¨¶ş¡¢Èç¹û²»ÖªµÀÒªÉ¾³ıÈí¼şµÄ¾ßÌåÃû³Æ£¬¿ÉÒÔÊ¹ÓÃ
-dpkg --get-selections | grep ¡®Èí¼şÏà¹ØÃû³Æ¡¯
-sudo apt-get purge Ò»¸ö´øcoreµÄpackage£¬Èç¹ûÃ»ÓĞ´øcoreµÄpackage£¬ÔòÊÇÇé¿ö¶ø¶¨¡£
-2¡¢ÇåÀí²ĞÁôÊı¾İ
+æ–¹æ³•äºŒã€å¦‚æœä¸çŸ¥é“è¦åˆ é™¤è½¯ä»¶çš„å…·ä½“åç§°ï¼Œå¯ä»¥ä½¿ç”¨
+dpkg --get-selections | grep â€˜è½¯ä»¶ç›¸å…³åç§°â€™
+sudo apt-get purge ä¸€ä¸ªå¸¦coreçš„packageï¼Œå¦‚æœæ²¡æœ‰å¸¦coreçš„packageï¼Œåˆ™æ˜¯æƒ…å†µè€Œå®šã€‚
+2ã€æ¸…ç†æ®‹ç•™æ•°æ®
 dpkg -l |grep ^rc|awk '{print $2}' |sudo xargs dpkg -P 
 
-ubuntu apt-get ÏÂÔØµÄÈí¼ş°ü·ÅÔÚ
+ubuntu apt-get ä¸‹è½½çš„è½¯ä»¶åŒ…æ”¾åœ¨
 /var/cache/apt/archives
-Èç¹ûÒªÇå³ı»º´æÎÄ¼ş¼Ğ£¬¿ÉÒÔÖ´ĞĞ
+å¦‚æœè¦æ¸…é™¤ç¼“å­˜æ–‡ä»¶å¤¹ï¼Œå¯ä»¥æ‰§è¡Œ
 sudo apt-get clean
 
-½øÈëµ¥ÓÃ»§Ä£Ê½:
-Ñ¡Ôñrecovery mode
- ½«linux ... ro recovery .. "roÖ®ºóÌæ»»Îª rw single init=/bin/bash",crtl+x Æô¶¯
+è¿›å…¥å•ç”¨æˆ·æ¨¡å¼:
+é€‰æ‹©recovery mode
+ å°†linux ... ro recovery .. "roä¹‹åæ›¿æ¢ä¸º rw single init=/bin/bash",crtl+x å¯åŠ¨
  
- ¿ÉÒÔ´ÓcdromÖĞ°²×°Èí¼ş°ü:
- ²åÈë¹âÅÌ¾µÏñ,apt-cdrom add.
+ å¯ä»¥ä»cdromä¸­å®‰è£…è½¯ä»¶åŒ…:
+ æ’å…¥å…‰ç›˜é•œåƒ,apt-cdrom add.
 
-¸ü»»ÁËÓ²¼ş£¬macµØÖ·µÄ¸ü¸Ä¿ÉÄÜ»áµ¼ÖÂÍøÂ·ÎŞ·¨·ÃÎÊ
+æ›´æ¢äº†ç¡¬ä»¶ï¼Œmacåœ°å€çš„æ›´æ”¹å¯èƒ½ä¼šå¯¼è‡´ç½‘è·¯æ— æ³•è®¿é—®
 rm -f /etc/udev/rules.d/70-persistent-net.rules;reboot 
 
-ÎŞ½»»¥¸ü¸ÄÃÜÂë
+æ— äº¤äº’æ›´æ”¹å¯†ç 
 echo root:fsdfsdfds  |  chpasswd
 
-²é¿´³ö¿ÚIP
+æŸ¥çœ‹å‡ºå£IP
 curl ipecho.net/plain
-
-
