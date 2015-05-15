@@ -9,4 +9,4 @@ mkswap /data/swapXX
 5.active swap file 
 swapon /data/swapXX
 6.auto mount
-echo /data/swapXX swap swap defaults 0 0 | sudo tee -a /etc/fsta
+echo /data/swapXX swap swap defaults 0 0 | sudo tee -a /etc/fstab
