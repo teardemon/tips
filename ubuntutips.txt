@@ -36,6 +36,6 @@ echo root:fsdfsdfds  |  chpasswd
 
 查看出口IP
 curl ipecho.net/plain
-
+curl ifconfig.me
 
 ubuntu 12.04 安装 linux-image-generic-lts-trusty出错，更改或注释sysctl.conf中net.core.somaxconn的值
