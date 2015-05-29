@@ -21,3 +21,8 @@ curl -s -X POST $Identity_url/v2.0/tokens \
 
 #nova show  'updated'
 actually is not the last time you did nova <something>, but the last time nova report the vm, which is done after you do nova <something>  'instance changed' 
+
+nova reboot --hard <uuid>
+#如果VM的xml配置文件缺失，可以使用该命令生成。
+#the error is the result of something in libvirt's XML file (/etc/libvirt/qemu/instance-xxxxxxxx.xml) that no longer exists. You can enforce re-creation of the XML file as well as rebooting the instance by running the following command:
+
