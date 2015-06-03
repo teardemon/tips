@@ -1,0 +1,10 @@
+To create/update an image form a existing image:
+1. boot a vm with latest image. #only one nic is supported#, default gw should be setup by dhcp
+2. wait until it comes online, make sure the SG(security group) allows connections to remote desktop
+3. set the password of user, force change on next login.
+4. download and execute Cloudbase-Init, installer may be on c:\
+5. select Run sysprep and shutdown. the vm will stop.
+6. select username Admin
+7. select Administrators group
+8. select port COM1
+9. take an snapshot of the vm
