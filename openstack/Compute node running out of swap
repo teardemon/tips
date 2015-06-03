@@ -1,0 +1,50 @@
+Compute node running out of swap
+=====================
+
+
+1 - protect qemu process against OOM killer
+::
+
+        $ for pid in `ps -ef |grep qemu-system | grep -v grep | awk '{print $2}'` ; do echo -17 | sudo tee /proc/$pid/oom_adj ; done
+
+2 - decrease swapiness
+::
+
+        $ sudo sysctl -w vm.swappiness=0
+
+3 - check if a swap file is in use
+::
+
+        $ cat /proc/swaps  -> swap file in use
+        Filename                                Type            Size    Used    Priority
+        /dev/sda3                               partition       7813116 0       -1
+        /data/swap                              file            8290300 0       -2
+
+
+        $ cat /proc/swaps -> swap file is not in use
+        Filename                                Type            Size    Used    Priority
+        /dev/sda3                               partition       7813116 0       -1
+
+4 - create a swap file
+
+::
+
+        $ sudo dd if=/dev/zero of=/data/swapXX bs=1M count=8096
+        XX is a number, is the server does not have any previous swap file it can be skipped
+5 - format swap file
+
+::
+
+        $ sudo mkswap /data/swapXX
+
+6 - activate swap file
+
+::
+
+        $ sudo swapon /data/swapXX
+
+7 - add swapfile to /etc/fstab
+
+::
+
+        $ echo /data/swapXX swap swap defaults 0 0 | sudo tee -a /etc/fstab
