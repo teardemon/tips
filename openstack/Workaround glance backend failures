@@ -1,0 +1,155 @@
+Workaround glance backend failures
+===============
+
+Sympthoms
+-----
+
+- when an big image is created it fails
+::
+
+        $ nova image-create  --show --poll  46b217dd-01bc-4380-afb9-9b4e8074701a 'Windows Server 2008 R2 (build 20150521-01)'
+        Server snapshotting... 50% complete
+        Error snapshotting server
+        +----------------------+--------------------------------------------+
+        | Property             | Value                                      |
+        +----------------------+--------------------------------------------+
+        | OS-EXT-IMG-SIZE:size | 10804461568                                |
+        | created              | 2015-05-21T03:06:39Z                       |
+        | id                   | 62827852-fbb9-43fd-8183-4e5e6c5fb5f7       |
+        | minDisk              | 50                                         |
+        | minRam               | 0                                          |
+        | name                 | Windows Server 2008 R2 (build 20150521-01) |
+        | progress             | 0                                          |
+        | status               | DELETED                                    |
+        | updated              | 2015-05-21T03:09:56Z                       |
+        +----------------------+--------------------------------------------+
+
+on /var/log/nova/nova-compute.log on compute node this can be seen
+::
+
+        2015-05-21 11:51:32.423 2839 TRACE nova.compute.manager [instance: 46b217dd-01bc-4380-afb9-9b4e8074701a]     return self._http_request(url, method, **kwargs)
+        2015-05-21 11:51:32.423 2839 TRACE nova.compute.manager [instance: 46b217dd-01bc-4380-afb9-9b4e8074701a]   File "/usr/lib/python2.7/dist-packages/glanceclient/common/http.py", line 249, in _http_request
+        2015-05-21 11:51:32.43 2839 TRACE nova.compute.manager [instance: 46b217dd-01bc-4380-afb9-9b4e8074701a]     raise exc.from_response(resp, body_str)
+        2015-05-21 11:51:32.423 2839 TRACE nova.compute.manager [instance: 46b217dd-01bc-4380-afb9-9b4e8074701a] Invalid: 400 Bad Request
+        2015-05-21 11:51:32.423 2839 TRACE nova.compute.manager [instance: 46b217dd-01bc-4380-afb9-9b4e8074701a] Client disconnected before sending all data to backend
+        2015-05-21 11:51:32.423 2839 TRACE nova.compute.manager [instance: 46b217dd-01bc-4380-afb9-9b4e8074701a]     (HTTP 400)
+
+
+
+Workaround:
+------
+
+- launch the image creation process
+
+::
+
+        $ nova image-create  --show --poll  46b217dd-01bc-4380-afb9-9b4e8074701a 'Windows Server 2008 R2 (build 20150521-01)'
+
+- ssh to compute where the vm was running
+
+::
+
+        $ nova show 46b217dd-01bc-4380-afb9-9b4e8074701a
+        +--------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
+        | Property                             | Value                                                                                                                      |
+        +--------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
+        | OS-DCF:diskConfig                    | MANUAL                                                                                                                     |
+        | OS-EXT-AZ:availability_zone          | legacy                                                                                                                     |
+        | OS-EXT-SRV-ATTR:host                 | ip-10-21-176-23.yygamedev.com                                                                                              |
+        | OS-EXT-SRV-ATTR:hypervisor_hostname  | ip-10-21-176-23.yygamedev.com                                                                                              |
+        | OS-EXT-SRV-ATTR:instance_name        | instance-00080cc1                                                                                                          |
+        | OS-EXT-STS:power_state               | 1                                                                                                                          |
+        | OS-EXT-STS:task_state                | -                                                                                                                          |
+        | OS-EXT-STS:vm_state                  | active                                                                                                                     |
+        | OS-SRV-USG:launched_at               | 2015-05-20T10:29:54.000000                                                                                                 |
+        | OS-SRV-USG:terminated_at             | -                                                                                                                          |
+        | accessIPv4                           |                                                                                                                            |
+        | accessIPv6                           |                                                                                                                            |
+        | config_drive                         |                                                                                                                            |
+        | created                              | 2015-05-20T10:29:33Z                                                                                                       |
+        | eth0 network                         | 221.228.85.6                                                                                                               |
+        | eth1 network                         | 10.21.179.160                                                                                                              |
+        | flavor                               | yyclouds.small (fd688696-25ee-4ac0-93e6-a335ffbf9118)                                                                      |
+        | hostId                               | 4f2c45bc400d6137e9666f4d1a6fd6a20c71804c9b4b0a9f4fd7a161                                                                   |
+        | id                                   | 46b217dd-01bc-4380-afb9-9b4e8074701a                                                                                       |
+        | image                                | Windows Server 2008 R2 (build 20150420-01) (5809a21c-7aee-4dff-82f3-ba4309669a10)                                          |
+        | key_name                             | myKey                                                                                                                      |
+        | metadata                             | {"ip": "{\"type\":\"game typical\",\"value\":[\"221.228.85.6\",\"118.191.6.6\",\"10.21.179.160\"]}", "remark": "test_yao"} |
+        | name                                 | ip-221-228-85-6                                                                                                            |
+        | os-extended-volumes:volumes_attached | []                                                                                                                         |
+        | progress                             | 0                                                                                                                          |
+        | security_groups                      | test, test                                                                                                                 |
+        | status                               | ACTIVE                                                                                                                     |
+        | tenant_id                            | 866ad534f681412babc887e5030d503c                                                                                           |
+        | updated                              | 2015-05-21T03:09:56Z                                                                                                       |
+        | user_id                              | 1632e93a212e4221a8ffa442b4da39af                                                                                           |
+        +--------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
+
+- detect where the image is being generated
+::
+
+        $ ps -ef |grep qemu-img
+        nova     54176  2839 56 11:24 ?        00:00:00 qemu-img convert -f qcow2 -O qcow2 /var/lib/nova/instances/snapshots/tmpLypTgv/8de266570ad24d5ab5e794fbae4de618.delta /var/lib/nova/instances/snapshots/tmpLypTgv/8de266570ad24d5ab5e794fbae4de618
+
+        # cd /var/lib/nova/instances/snapshots/tmpLypTgv
+        # ls -lha
+        total 12G
+        drwx-----x 2 nova nova 4.0K May 21 11:24 .
+        drwxr-xr-x 3 nova nova 4.0K May 21 11:24 ..
+        -rw-r--r-- 1 nova nova  11G May 21 11:25 8de266570ad24d5ab5e794fbae4de618
+        -rw-r--r-- 1 nova kvm  1.1G May 21 11:24 8de266570ad24d5ab5e794fbae4de618.delta
+
+- wait until qemu-img finish to write the image, check qemu-img is no longer running and the image size does not change
+::
+
+        # date
+        Thu May 21 11:30:00 CST 2015
+
+        # ls -lart
+        total 11672796
+        drwxr-xr-x 3 nova nova        4096 May 21 11:28 ..
+        -rw-r--r-- 1 nova kvm   1148846080 May 21 11:28 b227dc3683c1480e9951fdef0df72829.delta
+        drwx-----x 2 nova nova        4096 May 21 11:28 .
+        -rw-r--r-- 1 nova nova 10804461568 May 21 11:29 b227dc3683c1480e9951fdef0df72829
+
+- copy the image to /tmp
+::
+
+        # cp b227dc3683c1480e9951fdef0df72829 /tmp/
+
+- upload the image from tmp to filestore
+::
+
+       $ source openrc.admin
+       $ glance  image-create --name 'Windows Server 2008 R2 (build 20150521-01)' --disk-format qcow2 --container-format bare --is-public True --file /tmp/b227dc3683c1480e9951fdef0df72829  --store file
+       +------------------+--------------------------------------------+
+       | Property         | Value                                      |
+       +------------------+--------------------------------------------+
+       | checksum         | 00adc222e615851d79dea0a83625e466           |
+       | container_format | bare                                       |
+       | created_at       | 2015-05-21T03:33:55                        |
+       | deleted          | False                                      |
+       | deleted_at       | None                                       |
+       | disk_format      | qcow2                                      |
+       | id               | 92c6c0fc-30ba-497b-8be6-0c7e54bdf427       |
+       | is_public        | True                                       |
+       | min_disk         | 0                                          |
+       | min_ram          | 0                                          |
+       | name             | Windows Server 2008 R2 (build 20150521-01) |
+       | owner            | 4869754a3f75444dbdac5e5b7bb48bb0           |
+       | protected        | False                                      |
+       | size             | 10804461568                                |
+       | status           | active                                     |
+       | updated_at       | 2015-05-21T03:35:29                        |
+       | virtual_size     | None                                       |
+       +------------------+--------------------------------------------+
+
+- delete the temporary file
+::
+
+       $ sudo rm /tmp/b227dc3683c1480e9951fdef0df72829
+
+
+**NOTE**
+
+image will land in one of glance nodes, a cronjob (/etc/cron.d/image-sync) will copy to the other node but it may take an hour. before that 50% of attempts to use the image will fail
