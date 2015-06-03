@@ -20,3 +20,9 @@ medium load vm: stress --cpu 2 --io 1 --vm 10 -d 1
 dmidecode |grep -A16 "System Information$"
 内存槽及内存条：
 dmidecode |grep -A16 "Memory Device$"
+##############################################
+How To Create OOM Exclusions in Linux
+pgrep -f "/usr/sbin/sshd" | while read PID; do echo -17 > /proc/$PID/oom_adj; done
+oom_adj is deprecated, please use oom_score_adj instead.
+pgrep -f “/usr/sbin/sshd” | while read PID; do echo -1000 > /proc/$PID/oom_score_adj; done
+##############################################
