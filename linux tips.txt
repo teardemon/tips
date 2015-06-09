@@ -26,3 +26,6 @@ pgrep -f "/usr/sbin/sshd" | while read PID; do echo -17 > /proc/$PID/oom_adj; do
 oom_adj is deprecated, please use oom_score_adj instead.
 pgrep -f “/usr/sbin/sshd” | while read PID; do echo -1000 > /proc/$PID/oom_score_adj; done
 ##############################################
+cpufreq-info
+查看CPU频率信息
+##############################################
