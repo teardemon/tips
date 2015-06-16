@@ -14,6 +14,8 @@ tcpdump -v -i eth0 -s 1500 -XX -c 1 'ether proto 0x88cc'|egrep "Management Addre
 stress test
 high load vm: stress --cpu 10 --io 4 --vm 120 -d 1
 medium load vm: stress --cpu 2 --io 1 --vm 10 -d 1
+检测内存:memtester
+
 ##############################################
 硬件信息：
 查看主板型号：
