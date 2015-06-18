@@ -31,3 +31,6 @@ pgrep -f “/usr/sbin/sshd” | while read PID; do echo -1000 > /proc/$PID/oom_s
 cpufreq-info
 查看CPU频率信息
 ##############################################
+服务器硬件检测
+采用mcelog:mcelog 是 x86 的 Linux 系统上用来检查硬件错误，特别是内存和CPU错误的工具。
+##############################################
