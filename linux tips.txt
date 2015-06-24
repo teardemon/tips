@@ -37,3 +37,7 @@ cpufreq-info
 使用parted -l查看boot flag 所在分区错误
 使用fdisk修改 ，'a'参数
 ##############################################
+查看内核版本
+1.uname -a 
+2.cat /proc/version 或者 cat /proc/version_signature 
+##############################################
