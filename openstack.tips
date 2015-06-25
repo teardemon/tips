@@ -32,4 +32,31 @@ mount /dev/nbd0p1 /mnt/
 umount /mnt
 pgrep -lf qemu-nbd
 kill 6352
+#VM无法正常启动kernel
+1. fix the disk UUID in guest filesystem.
+
+   mount the disk using qemu-nbd, edit files:
+     /etc/fstab
+     /mnt/etc/grub.conf
+   use /dev/vda1 instead of UUID=xxx
+
+2. reinstall grub in guest disk.
+
+   use qemu-nbd to get the block device.
+
+   grub-install --root-directory=/mnt/ --modules="biosdisk part_msdos" /dev/nbd0
+
+   now you get a grub shell. do a manual boot:
+
+   // commands have tab completion.
+   set root=(hd0,msdos1)
+   linux /boot/vmlinuz-2.6.32-431.3.1.el6.centos.plus.x86_64 ro root=/dev/vda1
+   initrd /boot/initramfs-2.6.32-431.3.1.el6.centos.plus.x86_64.img
+   boot
+
+3. when VM boots ok. reinstall grub.
+
+   grub-install /dev/vda
+
+   try reboot VM, grub should work.
 
