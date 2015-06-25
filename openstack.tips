@@ -26,3 +26,10 @@ nova reboot --hard <uuid>
 #如果VM的xml配置文件缺失，可以使用该命令生成。
 #the error is the result of something in libvirt's XML file (/etc/libvirt/qemu/instance-xxxxxxxx.xml) that no longer exists. You can enforce re-creation of the XML file as well as rebooting the instance by running the following command:
 
+#挂在VM硬盘
+sudo qemu-nbd -c /dev/nbd0 /var/lib/nova/instances/8f3ff2b8-d65c-48ee-aa3e-39690e83ef2c/disk
+mount /dev/nbd0p1 /mnt/
+umount /mnt
+pgrep -lf qemu-nbd
+kill 6352
+
