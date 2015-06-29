@@ -14,3 +14,11 @@ Port 32200
 #copy files 
 at door machine: scp -3 host1:file1 host2:file2
 
+
+#This says "ssh, please establish a secure connection from TCP port 3002 on my local machine to
+#TCP port 119, the news port, on news.yoyodyne.com."
+ssh -L 3002:localhost:119 news.yoyodyne.com
+
+先连接 176.178，然后从 178 连接 127.0.0.1:5901 端口，然后转发到ssh本地客户端的5901端口。
+ssh -N -L 5901:127.0.0.1:5901 10.21.176.178
+
