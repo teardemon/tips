@@ -41,6 +41,6 @@ curl ifconfig.me
 ubuntu 12.04 安装 linux-image-generic-lts-trusty出错，更改或注释sysctl.conf中net.core.somaxconn的值
 
 更改网卡名称em->eth0
-添加biosdevname=0  /etc/default/grub.conf
+添加biosdevname=0  /etc/default/grub
 sudo update-grub
 sudo reboot
