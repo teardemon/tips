@@ -60,3 +60,5 @@ kill 6352
 
    try reboot VM, grub should work.
 
+#如何设置ip-x-x-x-x的主机名
+先创建网络端口（得到IP），再创建VM
