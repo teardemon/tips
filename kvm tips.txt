@@ -43,3 +43,5 @@ now can use virsh console
 #virsh define template
 #now got a new vm
 
+#KVM 与 VNC 下鼠标不同步的解决方案
+进入控制面板 -> 鼠标 -> 指针选项，去掉“提高指针精确度”前面的勾
