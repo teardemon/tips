@@ -1,0 +1,8 @@
+#snmp配置 v2c
+com2sec MySnmp 192.168.1.0/24 TEST
+
+group MyRoGroup v2c  MySnmp
+
+view all included .1
+
+access MyRoGroup "" any noauth exact all none none
