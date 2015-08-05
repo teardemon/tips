@@ -1,26 +1,32 @@
-mysqlcheck ±íÎ¬»¤¹¤¾ßIt checks, repairs, optimizes, or analyzes tables.
+mysqlcheck è¡¨ç»´æŠ¤å·¥å…·It checks, repairs, optimizes, or analyzes tables.
 mysqldump:
 mysqldump db_name > backup-file.sql
 mysql db_name < backup-file.sql
 mysql -e "source /path-to-backup/backup-file.sql" db_name
-mysqldumpÒÆ¶¯Êý¾Ý¿â:
+mysqldumpç§»åŠ¨æ•°æ®åº“:
 mysqldump --opt db_name | mysql --host=remote_host -C db_name
  
-ÏÔÊ¾±íÐÅÏ¢
+æ˜¾ç¤ºè¡¨ä¿¡æ¯
 "DESCRIBE pet;" or "desc pet;"
-ÏÔÊ¾´´½¨±íÓï¾ä:show create table pet;
-ÁÐµÄ×î´óÖµ:select max(birth) as young from pet;
-¸ü¸ÄrootÃÜÂë:mysqladmin -u root -p password "newpassword"
-ÏòMySQLÔö¼ÓÐÂÓÃ»§ÕË»§:
+æ˜¾ç¤ºåˆ›å»ºè¡¨è¯­å¥:show create table pet;
+åˆ—çš„æœ€å¤§å€¼:select max(birth) as young from pet;
+æ›´æ”¹rootå¯†ç :mysqladmin -u root -p password "newpassword"
+å‘MySQLå¢žåŠ æ–°ç”¨æˆ·è´¦æˆ·:
 GRANT ALL PRIVILEGES ON *.* TO 'monty'@'localhost' IDENTIFIED BY 'some_pass' WITH GRANT OPTION;
  
 INSERT INTO user VALUES('localhost','monty',PASSWORD('some_pass'),
                           'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y');
 
 FLUSH PRIVILEGES;
-Ê¹ÓÃ GRANT£¬Ôò²»ÐèÒªÊ¹ÓÃFLUSH PRIVILEGES¡£
+ä½¿ç”¨ GRANTï¼Œåˆ™ä¸éœ€è¦ä½¿ç”¨FLUSH PRIVILEGESã€‚
  
-´ÓMySQLÉ¾³ýÓÃ»§ÕË»§:DROP USER
-ÉèÖÃÕË»§ÃÜÂë:
+ä»ŽMySQLåˆ é™¤ç”¨æˆ·è´¦æˆ·:DROP USER
+è®¾ç½®è´¦æˆ·å¯†ç :
 SET PASSWORD FOR 'jeffrey'@'%' = PASSWORD('biscuit');
-MyISAM±í(¶ÔÓ¦.MYIºÍ.MYDÎÄ¼þµÄ±í)
+MyISAMè¡¨(å¯¹åº”.MYIå’Œ.MYDæ–‡ä»¶çš„è¡¨)
+
+mysqlå®‰è£…å‡ºé”™:
+rm -rf /var/lib/mysql/
+rm -rf /etc/mysql/
+apt-get autoremove mysql*--purge
+apt-get install mysql-server
