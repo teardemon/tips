@@ -11,14 +11,18 @@ output file:
 logname = 'C:\\Program Files\\RealVNC\\VNC Server\\Logs\\vncserver.log'
 result_log = 'vnc_result.log'
 
-
+f_disconn = re.compile(r'Connections: disconnected: [0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}::[0-9]{4,5}.*\(\[AuthFailure\]')
+#客户端认证失败，未登陆
 s_conn = re.compile(r'Connections: authenticated: [0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}::[0-9]{4,5}')
+#客户端认证成功，与VNC server建立连接
+
+#下列五种匹配均为客户端建立连接之后断开
 server_disconn = re.compile(r'Connections: disconnected: [0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}::[0-9]{4,5}.*\(\[SessionClosed')
 s_disconn = re.compile(r'Connections: disconnected: [0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}::[0-9]{4,5}.*\(\[ViewerClosed')
 t_disconn = re.compile(r'Connections: disconnected: [0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}::[0-9]{4,5}.*\(\[IdleTimeout')
 e_disconn = re.compile(r'Connections: disconnected: [0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}::[0-9]{4,5}.*\(\[EndOfStream')
 g_disconn = re.compile(r'Connections: disconnected: [0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}::[0-9]{4,5}.*\(\[System\] read')
-f_disconn = re.compile(r'Connections: disconnected: [0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}::[0-9]{4,5}.*\(\[AuthFailure\]')
+
 
 def get_auth_lines():
     templ=[]
@@ -72,9 +76,3 @@ if __name__ == '__main__':
     outcontent = get_log_report()
     with open(result_log,'w') as outfile:
         outfile.writelines(outcontent)
-
-
-
-
-
-
