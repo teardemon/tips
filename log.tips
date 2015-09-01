@@ -1,0 +1,11 @@
+#logrotate
+logrotate分割日志
+基于cron运行，/etc/cron.daily/logrotate
+
+配置：
+dateext 已日志名加日期的格式轮转日志
+手动轮转：
+/usr/sbin/logrotate /etc/logrotate.conf
+
+
+
