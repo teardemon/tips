@@ -1,6 +1,7 @@
 #install
 sudo apt-get install kvm qemu
 sudo apt-get install virtinst python-libvirt virt-viewer virt-manager
+#grep -E '(vmx|svm)' /proc/cpuinfo
 #kvm create VM
 qemu-img create -f qcow2 /data/ubuntu-12.04.qcow2 10G
 virt-install --virt-type kvm --name test --ram 1024 \
