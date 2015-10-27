@@ -24,3 +24,9 @@ A = $a
 使用Crtl + o 回到之前的位置，Crtl + I 会跳转更新的位置
 输入 % 可以查找配对的括号 )、]、}
 >G从当前行到末尾行增加缩进
+
+####################################
+修改默认的编辑器
+
+1.echo export EDITOR=/usr/bin/vim > ~/.bashrc
+2.update-alternatives --config editor
