@@ -1,60 +1,60 @@
-echo $((2#101011)) 进制转换，输出十进制(2,8,16)
+echo $((2#101011)) 陆酶脰脝脳陋禄禄拢卢脢盲鲁枚脢庐陆酶脰脝(2,8,16)
 
-REPLY是'read'命令结果保存的默认变量.
+REPLY脢脟'read'脙眉脕卯陆谩鹿没卤拢麓忙碌脛脛卢脠脧卤盲脕驴.
 
-$SECONDS 这个脚本已经运行的时间(单位为秒). 
+$SECONDS 脮芒赂枚陆脜卤戮脪脩戮颅脭脣脨脨碌脛脢卤录盲(碌楼脦禄脦陋脙毛). 
 
-$_ 保存之前执行的命令的最后一个参数. 
+$_ 卤拢麓忙脰庐脟掳脰麓脨脨碌脛脙眉脕卯碌脛脳卯潞贸脪禄赂枚虏脦脢媒. 
 
-$$ 脚本自身的进程ID
+$$ 陆脜卤戮脳脭脡铆碌脛陆酶鲁脤ID
 
-$$ 脚本自身的进程ID
+$$ 陆脜卤戮脳脭脡铆碌脛陆酶鲁脤ID
 
-字符串长度：
+脳脰路没麓庐鲁陇露脠拢潞
 ${#string} 
 expr length $string 
 expr "$string" : '.*' 
 
 (cd /source/directory && tar cf - . ) | (cd /dest/directory && tar xpvf -)
 
-expr "$a" : '.*' 字符串a的长度  ':'等于match
+expr "$a" : '.*' 脳脰路没麓庐a碌脛鲁陇露脠  ':'碌脠脫脷match
 
-在DOS文件格式中使用CR/LF换行，在Unix下仅使用LF换行，sed替换命令如下：
-   DOS转UNIX：$ sed ‘s/.$//’dosfile.txt > unixfile.txt
-   UNIX转DOS：$ sed ’s/$/\r/’unixfile.txt > dosfile.txt
+脭脷DOS脦脛录镁赂帽脢陆脰脨脢鹿脫脙CR/LF禄禄脨脨拢卢脭脷Unix脧脗陆枚脢鹿脫脙LF禄禄脨脨拢卢sed脤忙禄禄脙眉脕卯脠莽脧脗拢潞
+   DOS脳陋UNIX拢潞$ sed 隆庐s/.$//隆炉dosfile.txt > unixfile.txt
+   UNIX脳陋DOS拢潞$ sed 隆炉s/$/\r/隆炉unixfile.txt > dosfile.txt
    
-column 列格式化工具. 这个过滤工具将会将列类型的文本转化为"易于打印"的表格式进行输出, 
-通过在合适的位置插入tab.    
+column 脕脨赂帽脢陆禄炉鹿陇戮脽. 脮芒赂枚鹿媒脗脣鹿陇戮脽陆芦禄谩陆芦脕脨脌脿脨脥碌脛脦脛卤戮脳陋禄炉脦陋"脪脳脫脷麓貌脫隆"碌脛卤铆赂帽脢陆陆酶脨脨脢盲鲁枚, 
+脥篓鹿媒脭脷潞脧脢脢碌脛脦禄脰脙虏氓脠毛tab.    
 (printf "PERMISSIONS LINKS OWNER GROUP SIZE MONTH DAY HH:MM PROG-NAME\n"; ls -l | sed 1d) | column -t 
 
-iconv 一个可以将文件转化为不同编码格式(字符集)的工具
-获取IP
+iconv 脪禄赂枚驴脡脪脭陆芦脦脛录镁脳陋禄炉脦陋虏禄脥卢卤脿脗毛赂帽脢陆(脳脰路没录炉)碌脛鹿陇戮脽
+禄帽脠隆IP
 /sbin/ifconfig|grep "inet addr:"|grep -v 127.0.0.1|awk -F [' ':]+ '{print $4}'
 
 ################################################
-使用dd创建大的文件块:
+脢鹿脫脙dd麓麓陆篓麓贸碌脛脦脛录镁驴茅:
 dd if=/dev/zero of=XenGuest1.sawp bs=1024k count=1024k
 dd if=/dev/zero of=XenGuest1.sawp bs=1024k seek=1024 count=0
-使用seek可以跳过从/dev/zero复制的块,可以减少创建时间.
+脢鹿脫脙seek驴脡脪脭脤酶鹿媒麓脫/dev/zero赂麓脰脝碌脛驴茅,驴脡脪脭录玫脡脵麓麓陆篓脢卤录盲.
 ################################################
 
-tcpdump用法：
-关键字类型：
-关于类型的关键字：host net Port
-确认传输的方向：src , dst 
-协议的关键字：arp,tcp,udp
-其他重要的关键字如下：gateway,broadcast,less,greater,还有三种逻辑运算，取非运算是 'not ' '! ',与运算是'and','&&';或运算 是'or','││'；
-示例：
+tcpdump脫脙路篓拢潞
+鹿脴录眉脳脰脌脿脨脥拢潞
+鹿脴脫脷脌脿脨脥碌脛鹿脴录眉脳脰拢潞host net Port
+脠路脠脧麓芦脢盲碌脛路陆脧貌拢潞src , dst 
+脨颅脪茅碌脛鹿脴录眉脳脰拢潞arp,tcp,udp
+脝盲脣没脰脴脪陋碌脛鹿脴录眉脳脰脠莽脧脗拢潞gateway,broadcast,less,greater,禄鹿脫脨脠媒脰脰脗脽录颅脭脣脣茫拢卢脠隆路脟脭脣脣茫脢脟 'not ' '! ',脫毛脭脣脣茫脢脟'and','&&';禄貌脭脣脣茫 脢脟'or','漏娄漏娄'拢禄
+脢戮脌媒拢潞
 tcpdump host 192.168.138.101
 tcpdump tcp port 23 and host 210.27.48.1
 
-设置一个擦除字符：stty erase '#'，当时用read时，就可以使用#来擦除字符了，使用stty erase'^?'恢复
-stty -echo 关闭显示 stty echo 恢复
+脡猫脰脙脪禄赂枚虏脕鲁媒脳脰路没拢潞stty erase '#'拢卢碌卤脢卤脫脙read脢卤拢卢戮脥驴脡脪脭脢鹿脫脙#脌麓虏脕鲁媒脳脰路没脕脣拢卢脢鹿脫脙stty erase'^?'禄脰赂麓
+stty -echo 鹿脴卤脮脧脭脢戮 stty echo 禄脰赂麓
 
-如果给予一个普通用户sudo,root 下 vim的权限,在vim中就可以使用:!COMMAND 来执行所有命令.
-使用NOEXEC来禁止:%admin ALL=(root)NOEXEC:/usr/bin/vim
+脠莽鹿没赂酶脫猫脪禄赂枚脝脮脥篓脫脙禄搂sudo,root 脧脗 vim碌脛脠篓脧脼,脭脷vim脰脨戮脥驴脡脪脭脢鹿脫脙:!COMMAND 脌麓脰麓脨脨脣霉脫脨脙眉脕卯.
+脢鹿脫脙NOEXEC脌麓陆没脰鹿:%admin ALL=(root)NOEXEC:/usr/bin/vim
 
-在shell中比较浮点数可以用bc或awk:
+脭脷shell脰脨卤脠陆脧赂隆碌茫脢媒驴脡脪脭脫脙bc禄貌awk:
 [ `echo 10.23 <  15"|bc` -eq 1 ]
 ####################################################
 screen usage:

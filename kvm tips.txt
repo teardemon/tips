@@ -3,12 +3,18 @@ sudo apt-get install kvm qemu
 sudo apt-get install virtinst python-libvirt virt-viewer virt-manager
 #kvm create VM
 qemu-img create -f qcow2 /data/ubuntu-12.04.qcow2 10G
-virt-install --virt-type kvm --name test --ram 1024 \
+virt-install --virt-type kvm --name test --ram 1024  --vcpus=2 \
 --cdrom=/data/ubuntu-12.04.2-server-amd64.iso \
 --disk path=/data/ubuntu-12.04.qcow2,size=10,format=qcow2 \
 --network network=default \
 --graphics vnc,listen=0.0.0.0 --noautoconsole \
 --os-type=linux --os-variant=ubuntuprecise
+
+# virt-install --virt-type kvm --name debian7-test --ram 1024  --vcpus=2 --cdrom=/data/debian-7.7.0-amd64-CD-1.iso  --disk path=/data/debian-7.7.qcow2,size=50,format=qcow2 --network bridge=br0,model=virtio --graphics vnc,listen=0.0.0.0 --noautoconsole --os-type linux --debug
+
+#KVM could not open disk image: Permission denied
+defaults user:  libvirt-qemu:libvirt-qemu ,change mode
+
 #get VNC port
 virsh vncdisplay test
 
