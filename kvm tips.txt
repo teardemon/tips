@@ -28,7 +28,7 @@ virsh resume test
 #kvm use 'virsh console'
 vim /etc/default/grub
 GRUB_CMDLINE_LINUX_DEFAULT="console=ttyS0"
-updete-grub
+update-grub
 reboot
 
 #add "/etc/init/ttyS0.conf"
