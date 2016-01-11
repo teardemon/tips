@@ -1,0 +1,18 @@
+#proftpd
+#mod_quota貌似已被取消，可使用mod_quotatab 
+#编译安装
+./configure  --prefix=/usr/local/proftpd  --enable-nls --with-modules=mod_quotatab:mod_radius:mod_quotatab_radius
+#使用匿名用户，添加ftp用户
+#quota
+ftpquota --create-table --type=limit
+ftpquota --create-table --type=tally
+#硬性限制ftp这个用户最多上传1000个文件，总大小最多1G
+/usr/local/etc# ftpquota --add-record --type=limit --quota-type=user --name=ftp --files-upload=1000 --bytes-upload=1024 --limit-type="hard" --units="Mb"
+#使用ftpquota –show-record –type=limit可以查看已有的配额
+/usr/local/etc# ftpquota --show-record --type=limit ftpquota.limittab
+#使用ftpquota –show-record –type=tally可以查看已经使用的配额
+/usr/local/etc# ftpquota --show-record --type=tally
+#使用ftpquota –update-record可以修改limit和tally:
+/usr/local/etc# ftpquota --update-record --type=tally --quota-type=user -name=ftp --files-upload=100 --bytes-upload=100 --units="Mb"
+/usr/local/etc# ftpquota --update-record --type=tally --quota-type=user -name=ftp
+
