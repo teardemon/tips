@@ -1,0 +1,10 @@
+ping原理是用类型码为0的ICMP发请 求，受到请求的主机则用类型码为8的ICMP回应
+echo “1″ > /proc/sys/net/ipv4/icmp_echo_ignore_all
+将其值改为1后为禁止PING
+将其值改为0后为解除禁止PING
+
+iptables -A INPUT -p icmp –icmp-type 8 -s 0/0 -j DROP
+iptables -A INPUT -p icmp –icmp-type 0 -s 0/0 -j ACCEPT
+iptables -A OUTPUT -p icmp –icmp-type 0 -j DROP
+iptables -A OUTPUT -p icmp –icmp-type 8 -j ACCEPT
+
