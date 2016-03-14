@@ -1,0 +1,15 @@
+ip t a net2aliVpn mode gre remote 120.26.0.63 local 120.27.148.250 ttl 255
+ip link set dev net2aliVpn up
+ip a a 10.91.32.7 dev net2aliVpn
+ip r a 10.91.32.6 dev net2aliVpn
+ip r a 10.0.0.0/8 dev net2aliVpn
+
+
+#vpn to 120.27.148.250
+ip t a net2ali250 mode gre remote 120.27.148.250  local 120.26.0.63  ttl 255
+ip link set dev net2ali250 up
+ip a a 10.91.32.6 dev net2ali250
+ip r a 10.91.32.7 dev net2ali250
+ip r a 10.79.33.250/32 dev net2ali250
+
+
