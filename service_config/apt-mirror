@@ -1,0 +1,36 @@
+#install
+apt-get install apt-mirror
+#configure vim  /etc/apt/mirror.list
+#use  mirrors.163.com
+#ubuntu precise trusty
+deb-amd64 http://mirrors.163.com/ubuntu/ precise main restricted universe multiverse
+deb-amd64 http://mirrors.163.com/ubuntu/ precise-security main restricted universe multiverse
+deb-amd64 http://mirrors.163.com/ubuntu/ precise-updates main restricted universe multiverse
+deb-amd64 http://mirrors.163.com/ubuntu/ precise-proposed main restricted universe multiverse
+deb-amd64 http://mirrors.163.com/ubuntu/ precise-backports main restricted universe multiverse
+deb-i386 http://mirrors.163.com/ubuntu/ precise main restricted universe multiverse
+deb-i386 http://mirrors.163.com/ubuntu/ precise-security main restricted universe multiverse
+deb-i386 http://mirrors.163.com/ubuntu/ precise-updates main restricted universe multiverse
+deb-i386 http://mirrors.163.com/ubuntu/ precise-proposed main restricted universe multiverse
+deb-i386 http://mirrors.163.com/ubuntu/ precise-backports main restricted universe multiverse
+
+deb-amd64 http://mirrors.163.com/ubuntu/ trusty main restricted universe multiverse
+deb-amd64 http://mirrors.163.com/ubuntu/ trusty-security main restricted universe multiverse
+deb-amd64 http://mirrors.163.com/ubuntu/ trusty-updates main restricted universe multiverse
+deb-amd64 http://mirrors.163.com/ubuntu/ trusty-proposed main restricted universe multiverse
+deb-amd64 http://mirrors.163.com/ubuntu/ trusty-backports main restricted universe multiverse
+deb-i386 http://mirrors.163.com/ubuntu/ trusty main restricted universe multiverse
+deb-i386 http://mirrors.163.com/ubuntu/ trusty-security main restricted universe multiverse
+deb-i386 http://mirrors.163.com/ubuntu/ trusty-updates main restricted universe multiverse
+deb-i386 http://mirrors.163.com/ubuntu/ trusty-proposed main restricted universe multiverse
+deb-i386 http://mirrors.163.com/ubuntu/ trusty-backports main restricted universe multiverse
+
+clean http://mirrors.163.com/debian/
+clean http://mirrors.163.com/ubuntu/
+
+#sync
+screen apt-mirror
+
+#cron 
+30 5    * * *    root    /usr/bin/apt-mirror >> /var/spool/apt-mirror/var/cron.log 
+

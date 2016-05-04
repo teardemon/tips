@@ -1,0 +1,52 @@
+#Linux下文件实时同步
+
+[1]: https://www.centos.bz/2012/06/inotify-tools-introduction/ 
+[2]: http://www.live-in.org/archives/1144.html
+[3]: https://wsgzao.github.io/post/sersync/
+[4]: http://lihuipeng.blog.51cto.com/3064864/563836
+##1.inotify文件监控工具使用
+系统参数调整/proc/sys/fs/inotify/
+
+inotify-tools，工具inotifywait，它是用来监控文件或目录的变化，inotifywatch，它是用来统计文件系统访问的次数
+
+##2.使用rsync+inotify-tools同步
+>首先需要安装inotify-tools，并在目的机器上配置rsyncd
+
+>测试脚本
+
+``` 
+    #!/bin/bash
+    src=/raid/
+    des=test@10.32.64.173::all
+    inotifywait -mrq --timefmt '%d/%m/%y %H:%M'  --format '%T %w%f' \
+    -e modify,delete,create,attrib ${src} \
+    | while read x
+    do
+        rsync -avz --delete --progress $src $des --password-file=/root/rsyncd.secret && \
+        echo "$x was rsynced" >> test.log
+    done
+```
+
+##3.使用sersync同步
+>1.安装sersync
+>>wget https://sersync.googlecode.com/files/sersync2.5.4_64bit_binary_stable_final.tar.gz
+>>tar -zxf sersync2.5.4_64bit_binary_stable_final.tar.gz && mv GNU-Linux-x86 /opt/sersync
+
+>2.修改配置
+>>将<sersync>下同步配置更改
+
+>3.启动
+>>nohup /opt/sersync/sersync2 -r -d -o /opt/sersync/confxml.xml >/opt/sersync/rsync.log 2>&1 &
+
+
+
+[参考链接]：
+
+1.[inotify-tools使用方法介绍] [1]
+
+2.[CentOS使用inotify+rsync实时同步][2]
+
+3.[sersync基于rsync+inotify实现数据实时同步][3]
+
+4.[sersync 文件同步系统（三） 插件使用说明][4]
+
