@@ -39,5 +39,5 @@ if __name__ == '__main__':
         print 'Usage:%s title content'% sys.argv[0]
         sys.exit(2)
     else:
-        s1 = send('799797618@qq.com','qiangyao610426','smtp.qq.com','qy610426@163.com')
+        s1 = send('xxxx@qq.com','xxxx','smtp.qq.com','xxx@163.com')
         s1.send_email(sys.argv[1],sys.argv[2])
