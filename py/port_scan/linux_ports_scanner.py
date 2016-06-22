@@ -14,23 +14,6 @@ hosts = get_linux()
 q = Queue.Queue()
 
 
-def get_content(SERVER_URL="http://10.32.64.64:8000/info/server/"):
-    """从指定url获取数据"""
-    content = requests.get(SERVER_URL).content
-    return content
-
-
-def filter_host(hosts, *key_words):
-    '''根据关键字过滤主机'''
-    result=[]
-    for host in hosts:
-        for i in key_words:
-            if i in host:
-                result.append(host)
-                break
-    return result
-
-
 def check_ports(ip):
     nm = ''
     try:
